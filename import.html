@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <style>
+        #csvDropzone {
+            border: 2px dashed #ccc;
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+        }
+        .dragover {
+            border-color: #009688;
+        }
+    </style>
+</head>
+<body>
+    <div id="csvDropzone">
+        <p>Drag and drop a CSV file here</p>
+        <input type="file" class="csvFile" id="csvFile" accept=".csv" style="display: none;">
+    </div>
+    <script>
+        const csvDropzone = document.getElementById("csvDropzone");
+
+        csvDropzone.addEventListener("dragover", function (event) {
+            event.preventDefault();
+            csvDropzone.classList.add("dragover");
+        });
+
+        csvDropzone.addEventListener("dragleave", function (event) {
+            event.preventDefault();
+            csvDropzone.classList.remove("dragover");
+        });
+
+        csvDropzone.addEventListener("drop", function (event) {
+            event.preventDefault();
+            csvDropzone.classList.remove("dragover");
+            const csvFile = event.dataTransfer.files[0];
+            console.log(csvFile);
+
+            if (csvFile.type === "text/csv") {
+                alert("CSV file has been selected");
+                importCsv(csvFile);
+            } else {
+                alert("Please drop a CSV file.");
+            }
+        });
+
+        csvDropzone.addEventListener("click", function () {
+            document.getElementById("csvFile").click();
+        });
+
+        document.getElementById("csvFile").addEventListener("change", function (e) {
+                var files = document.querySelector('#csvFile').files;
+                var file = files[0];
+                alert("CSV file has been selected");
+                importCsv(file);
+    
+        });
+                function onSuccess(result) {
+          console.log("onSuccess", result);
+        }
+        function onFailure(error) {
+
+          console.log(error.message);
+        }
+            function importCsv(file) {
+            const reader = new FileReader();
+
+          reader.onerror = event => {
+            console.error('Error while reading CSV file', event);
+            reader.abort();
+          }
+
+          reader.onload = event => {
+            var encodedFile = event.target.result;
+            console.log(encodedFile);
+               google.script.run
+            .withSuccessHandler(onSuccess)
+            .withFailureHandler(onFailure)
+            .importCSVFromUserForm(encodedFile);
+          }
+
+          reader.readAsText(file);
+}
+    </script>
+</body>
+</html>
