@@ -12,7 +12,7 @@ function onOpen() {
     SpreadsheetApp.getActive().toast(message, "⚠️ Alert"); 
   }
   
-  // Placeholder function to import CSV files from a URL
+  //  function to import CSV files from a URL
   function importCSVFromUrl() {
     var url = promptUserForInput("Please enter the URL of the CSV file:");
     
@@ -36,7 +36,7 @@ function onOpen() {
   
   }
   
-  // Placeholder function to import CSV files from Google Drive
+  //  function to import CSV files from Google Drive
   function importCSVFromDrive() {
     var fileName = promptUserForInput("Please enter the name of the CSV file to import from Google Drive:");
     var files = findFilesInDrive(fileName);
@@ -86,7 +86,7 @@ function onOpen() {
     } catch (error) {
       Logger.log("An error occurred:", error);
       
-      // Handle the error as needed, such as logging it or sending an email notification.
+     
     }
   }
   
