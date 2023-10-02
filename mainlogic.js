@@ -1,7 +1,8 @@
 function onOpen() {
+  
     var ui = SpreadsheetApp.getUi();
     ui.createMenu("Import CSV data 👉️")
-      .addItem("Import from URL", "importCSVFromUrl")
+      .addItem("Import from URL", "showImportUrl")
       .addItem("Import from Drive", "importCSVFromDrive")
       .addItem("Import CSV", "showImportForm") // Add this line
       .addToUi();
@@ -12,31 +13,8 @@ function onOpen() {
     SpreadsheetApp.getActive().toast(message, "⚠️ Alert"); 
   }
   
-  //  function to import CSV files from a URL
-  function importCSVFromUrl() {
-    var url = promptUserForInput("Please enter the URL of the CSV file:");
-    
-    console.log(UrlFetchApp.fetch(url));
-   var contents = Utilities.parseCsv(UrlFetchApp.fetch(url)); // a string containing CSV data into a two-dimensional array.
-    var sheetName = writeDataToSheet(contents);
-    console.log(typeof(contents));
-    console.log(contents);
-    
-    displayToastAlert("The CSV file was successfully imported into " + sheetName + ".");
   
-  }
-  function tempURL(url) {
-    console.log(UrlFetchApp.fetch(url));
-   var contents = Utilities.parseCsv(UrlFetchApp.fetch(url)); // a string containing CSV data into a two-dimensional array.
-    var sheetName = writeDataToSheet(contents);
-    console.log(typeof(contents));
-    console.log(contents);
-    
-    displayToastAlert("The CSV file was successfully imported into " + sheetName + ".");
-  
-  }
-  
-  //  function to import CSV files from Google Drive
+  // Placeholder function to import CSV files from Google Drive
   function importCSVFromDrive() {
     var fileName = promptUserForInput("Please enter the name of the CSV file to import from Google Drive:");
     var files = findFilesInDrive(fileName);
@@ -77,16 +55,15 @@ function onOpen() {
   // Function to import CSV data from a 2D array
   function importCSVFromUserForm(csvData) {
     try {
-      var url = promptUserForInput(typeof(csvData));
       Logger.log("Importing CSV data...");
       var contents = Utilities.parseCsv(csvData);
     var sheetName = writeDataToSheet(contents);
       displayToastAlert("The CSV file was successfully imported into " + sheetName + ".");
-      var url = promptUserForInput("Dataadded");
+     
     } catch (error) {
       Logger.log("An error occurred:", error);
       
-     
+      // Handle the error as needed, such as logging it or sending an email notification.
     }
   }
   
@@ -97,6 +74,9 @@ function onOpen() {
   function promptUserForInput(promptText) {
     var ui = SpreadsheetApp.getUi();
     var prompt = ui.prompt(promptText);
+    var response = prompt.getResponseText();
+  return response;
+
   }
   
   
@@ -167,6 +147,11 @@ function onOpen() {
     var htmlOutput = HtmlService.createHtmlOutputFromFile("import").setWidth(400).setHeight(300);
     // SpreadsheetApp.getUi().showModalDialog(HtmlService.createHtmlOutputFromFile("import"), "sample");
     SpreadsheetApp.getUi().showModalDialog(htmlOutput, "CSV Import");
+  }
+   function showImportUrl() {
+    var htmlOutput = HtmlService.createHtmlOutputFromFile("imp").setWidth(400).setHeight(300);
+    // SpreadsheetApp.getUi().showModalDialog(HtmlService.createHtmlOutputFromFile("import"), "sample");
+    SpreadsheetApp.getUi().showModalDialog(htmlOutput, "CSV Import from Url");
   }
   
   // Function to import CSV data from a 2D array

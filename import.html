@@ -2,6 +2,7 @@
 <html>
 <head>
     <base target="_top">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         #csvDropzone {
             border: 2px dashed #ccc;
@@ -16,17 +17,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </head>
 <body>
-    <div id="csvDropzone">
-        <p>Drag and drop a CSV file here</p>
-        <input type="file" class="csvFile" id="csvFile" accept=".csv" style="display: none;">
-    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div id="csvDropzone" class="border border-secondary rounded p-3">
+                    <h4 class="text-secondary">Drag and drop a CSV file here</h4>
+                    <input type="file" class="csvFile form-control-file" id="csvFile" accept=".csv" style="display: none;">
+                </div>
 
-    <div id="columnCheckboxes">
-    
-        <!-- Checkboxes will be dynamically added here -->
-    </div>
+                <div id="columnCheckboxes" class="mt-4">
+                    <!-- Checkboxes will be dynamically added here -->
+                </div>
 
-    <button id="doneButton" style="display: none;">Done</button>
+                <!-- <div class="mt-4">
+                    <input type="checkbox" id="filterData" class="form-check-input">
+                    <label for="filterData" class="form-check-label">Filter Data</label>
+                </div> -->
+
+                <button id="doneButton" class="btn btn-primary mt-3" style="display: none;">Done</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         const csvDropzone = document.getElementById("csvDropzone");
